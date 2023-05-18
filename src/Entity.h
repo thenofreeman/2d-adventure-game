@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Animator.h"
+
 class Entity
 {
     public:
@@ -11,16 +13,27 @@ class Entity
         void init();
         void destruct();
         void draw();
-        void update();
+        void update(const sf::Time& deltaTime);
+
+        void changeAnimation(const std::string& animationName);
 
         void action(); // eg. attack
         void interact(); // eg. talk, open chest
 
+        void moveUp();
+        void moveDown();
+        void moveLeft();
+        void moveRight();
+        void stopMoving();
+
     private:
         sf::RenderWindow& window;
         sf::Vector2f pos;
-        sf::RectangleShape shape;
-        sf::Texture texture;
         sf::Sprite sprite;
+        Animator animator;
+
+        bool moving [2];
+        sf::Vector2f currentMovementSpeed;
+        sf::Vector2f movementSpeed;
 
 };
