@@ -10,7 +10,7 @@ Game::Game(const std::string& title)
       view{sf::FloatRect(0, 0, windowSize.x, windowSize.y)}
 {
     window.setMouseCursorVisible(false);
-    window.setFramerateLimit(100);
+    // window.setFramerateLimit(100);
 
     view.setCenter(player.getPosition());
     window.setView(view);
@@ -25,24 +25,38 @@ void Game::run()
 
     sf::Clock clock;
 
-    sf::Time elapsedTime = clock.restart();
-    sf::Time deltaTime;
+    sf::Time timePerFrame = sf::seconds(1.0f / 60.0f);
+    // sf::Time elapsedTime = clock.restart();
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-    while(window.isOpen())
+    while (window.isOpen())
     {
-        deltaTime = clock.restart();
+        sf::Time deltaTime = clock.restart();
+        // elapsedTime += deltaTime;
 
-        elapsedTime += deltaTime;
-        float timeAsSeconds = elapsedTime.asSeconds();
+        // processEvents();
 
-        processEvents();
-        update(deltaTime);
+        timeSinceLastUpdate += deltaTime;
+
+        while (timeSinceLastUpdate > timePerFrame)
+        {
+            timeSinceLastUpdate -= timePerFrame;
+
+            processEvents();
+            update(timePerFrame);
+        }
+
         render();
     }
+
+    shutdown();
 }
 
 void Game::init()
 {
+    // Enable V-Sync
+    // window.setVerticalSyncEnabled();
+
     enum Tile
     {
         GRASS=0, DIRT,
