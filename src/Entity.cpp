@@ -1,6 +1,7 @@
 #include "Entity.h"
 
 #include "Sprites.h"
+#include "Textures.h"
 
 Entity::Entity(sf::RenderWindow& window)
     : window{window},
@@ -16,17 +17,21 @@ Entity::Entity(sf::RenderWindow& window)
 
     sprite.setTextureRect(sf::IntRect(0, 0, spriteSize.x, spriteSize.y));
 
-    auto& walkUpAnimation = animator.createAnimation("player-walk-up", "res/img/player-walk-up.png",
-                                                   sf::seconds(1), true);
+    auto& walkUpAnimation = animator.createAnimation(Textures::PLAYER_WALK_UP,
+                                                     IMG_PATH + Textures::PLAYER_WALK_UP + IMG_EXT,
+                                                     sf::seconds(1), true);
     walkUpAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkDownAnimation = animator.createAnimation("player-walk-down", "res/img/player-walk-down.png",
-                                                   sf::seconds(1), true);
+    auto& walkDownAnimation = animator.createAnimation(Textures::PLAYER_WALK_DOWN,
+                                                       IMG_PATH + Textures::PLAYER_WALK_DOWN + IMG_EXT,
+                                                       sf::seconds(1), true);
     walkDownAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkLeftAnimation = animator.createAnimation("player-walk-side", "res/img/player-walk-side.png",
-                                                   sf::seconds(1), true);
+    auto& walkLeftAnimation = animator.createAnimation(Textures::PLAYER_WALK_SIDE,
+                                                       IMG_PATH + Textures::PLAYER_WALK_SIDE + IMG_EXT,
+                                                       sf::seconds(1), true);
     walkLeftAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkRightAnimation = animator.createAnimation("player-walk-side", "res/img/player-walk-side.png",
-                                                   sf::seconds(1), true);
+    auto& walkRightAnimation = animator.createAnimation(Textures::PLAYER_WALK_SIDE,
+                                                        IMG_PATH + Textures::PLAYER_WALK_SIDE + IMG_EXT,
+                                                        sf::seconds(1), true);
     walkRightAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
 }
 
@@ -66,33 +71,30 @@ void Entity::changeAnimation(const std::string& animationName)
 
 void Entity::moveUp()
 {
-    changeAnimation("player-walk-up");
+    changeAnimation(Textures::PLAYER_WALK_UP);
 
     currentMovementSpeed.y = -movementSpeed.y;
-
-    // if (pos.y < map.top)
-        // pos.y = map.top;
 
     moving[1] = true;
 }
 
 void Entity::moveDown()
 {
-    changeAnimation("player-walk-down");
+    changeAnimation(Textures::PLAYER_WALK_DOWN);
     currentMovementSpeed.y = movementSpeed.y;
     moving[1] = true;
 }
 
 void Entity::moveLeft()
 {
-    changeAnimation("player-walk-side");
+    changeAnimation(Textures::PLAYER_WALK_SIDE);
     currentMovementSpeed.x = -movementSpeed.x;
     moving[0] = true;
 }
 
 void Entity::moveRight()
 {
-    changeAnimation("player-walk-side");
+    changeAnimation(Textures::PLAYER_WALK_SIDE);
     currentMovementSpeed.x = movementSpeed.x;
     moving[0] = true;
 }

@@ -1,5 +1,7 @@
 #include "World.h"
 
+#include "Textures.h"
+
 World::World()
 {
     enum Tile
@@ -16,7 +18,7 @@ World::World()
         GRASS, GRASS, DIRT, GRASS, GRASS
     };
 
-    if (!map.load("res/img/map-death-mountain.png", sf::Vector2u(32, 32), level, 5, 5));
+    if (!map.load(IMG_PATH + Textures::WORLD_TILE_MAP + IMG_EXT, sf::Vector2u(32, 32), level, 5, 5));
 }
 
 World::~World()
