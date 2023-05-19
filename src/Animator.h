@@ -49,7 +49,7 @@ class Animator
         std::string getCurrentAnimationName() const;
 
     private:
-       Animator::Animation* findAnimation(const std::string& name);
+        Animator::Animation* findAnimation(const std::string& name);
 
         void switchAnimation(Animator::Animation* animation);
 

@@ -12,7 +12,7 @@ class Entity : public sf::Drawable
 
         void init();
         void destruct();
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void update(const sf::Time& deltaTime);
 
         void changeAnimation(const std::string& animationName);
