@@ -7,7 +7,19 @@
 
 int main()
 {
-    AssetManager assetManager;
+    try
+    {
+        AssetManager assetManager;
+
+        Game game("Adventure Game");
+        game.run();
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "EXCEPTION LOST TO MAIN: " << e.what() << std::endl;
+    }
+}
+
 
     // std::vector<Entity> entities;
     // entities.push_back(Entity(window));
@@ -24,8 +36,3 @@ int main()
     // sf::RectangleShape bgRect(sf::Vector2f(32*10, 32*6));
     // bgRect.setTextureRect(sf::IntRect(0, 0, 32*10, 32*6));
     // bgRect.setTexture(&bgTexture);
-
-    Game game("Adventure Game");
-    game.run();
-
-}
