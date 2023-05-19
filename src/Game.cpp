@@ -34,7 +34,7 @@ void Game::run()
         sf::Time deltaTime = clock.restart();
         // elapsedTime += deltaTime;
 
-        // processEvents();
+        processEvents();
 
         timeSinceLastUpdate += deltaTime;
 
