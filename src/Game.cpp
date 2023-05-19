@@ -5,7 +5,7 @@ Game::Game(const std::string& title)
       windowStyle{sf::Style::Titlebar | sf::Style::Close},
       window{sf::VideoMode(900, 600), title, windowStyle},
       player{Entity(window)},
-      map{TileMap()},
+      currentWorld{World()},
       windowSize{window.getSize()},
       view{sf::FloatRect(0, 0, windowSize.x, windowSize.y)}
 {
@@ -57,21 +57,6 @@ void Game::init()
     // Enable V-Sync
     // window.setVerticalSyncEnabled();
 
-    enum Tile
-    {
-        GRASS=0, DIRT,
-
-    };
-
-    const int level[] {
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS
-    };
-
-    if (!map.load("res/img/map-death-mountain.png", sf::Vector2u(32, 32), level, 5, 5));
 }
 
 void Game::shutdown()
@@ -131,7 +116,7 @@ void Game::render()
     window.clear(sf::Color::Black);
 
     // draw logic
-    window.draw(map);
+    window.draw(currentWorld);
     window.draw(player);
 
     window.display();

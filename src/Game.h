@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
-#include "TileMap.h"
+#include "World.h"
 
 class Game
 {
@@ -20,10 +20,11 @@ class Game
         sf::Uint32 windowStyle;
         sf::RenderWindow window;
         sf::Vector2f windowSize;
+        // Entity& controlledEntity;
 
         // shouldn't be here
         Entity player;
-        TileMap map;
+        World currentWorld;
         sf::View view;
         // end
 
@@ -32,6 +33,5 @@ class Game
         void processEvents();
         void update(const sf::Time& deltaTime);
         void render();
-
 
 };
