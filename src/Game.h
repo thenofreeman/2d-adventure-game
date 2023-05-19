@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
-// #include "Level.h"
 #include "TileMap.h"
 
 class Game
@@ -26,7 +25,6 @@ class Game
         Entity player;
         TileMap map;
         sf::View view;
-        // Level level;
         // end
 
         void init();
