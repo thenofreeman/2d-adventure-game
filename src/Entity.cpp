@@ -8,10 +8,9 @@ Entity::Entity(sf::RenderWindow& window)
       sprite{sf::Sprite()},
       animator{sprite},
       moving{false, false},
-      movementSpeed{sf::Vector2f(20, 20)},
+      movementSpeed{sf::Vector2f(50, 50)},
       currentMovementSpeed{movementSpeed}
 {
-
     sf::Vector2i spriteSize(32, 32);
     sprite.setOrigin(sf::Vector2f(spriteSize) * 0.5f);
 
@@ -29,7 +28,6 @@ Entity::Entity(sf::RenderWindow& window)
     auto& walkRightAnimation = animator.createAnimation("player-walk-side", "res/img/player-walk-side.png",
                                                    sf::seconds(1), true);
     walkRightAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-
 }
 
 void Entity::init()
@@ -69,7 +67,12 @@ void Entity::changeAnimation(const std::string& animationName)
 void Entity::moveUp()
 {
     changeAnimation("player-walk-up");
+
     currentMovementSpeed.y = -movementSpeed.y;
+
+    // if (pos.y < map.top)
+        // pos.y = map.top;
+
     moving[1] = true;
 }
 
