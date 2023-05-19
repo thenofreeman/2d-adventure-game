@@ -1,9 +1,11 @@
 #include <iostream>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
 #include "AssetManager.h"
 #include "Entity.h"
+#include "TileMap.h"
 
 constexpr char GAME_TITLE[] { "Adventure Game" };
 constexpr int GAME_FPS {100};
@@ -12,17 +14,38 @@ void handleInput(sf::RenderWindow& window, Entity& player);
 void updateFrame(sf::RenderWindow& window);
 void drawFrame(sf::RenderWindow& window, Entity& player, sf::RectangleShape& bgRect);
 
+enum Tile
+{
+    GRASS=0, DIRT,
+
+};
+
+
 int main()
 {
     sf::Uint32 win_style = sf::Style::Titlebar | sf::Style::Close;
-    sf::RenderWindow window(sf::VideoMode(300, 200), GAME_TITLE, win_style);
+    sf::RenderWindow window(sf::VideoMode(900, 600), GAME_TITLE, win_style);
 
     AssetManager assetManager;
 
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(GAME_FPS);
 
+    // std::vector<Entity> entities;
+    // entities.push_back(Entity(window));
+
     Entity player(window);
+
+    const int level[] {
+        GRASS, GRASS, DIRT, GRASS, GRASS,
+        GRASS, GRASS, DIRT, GRASS, GRASS,
+        GRASS, GRASS, DIRT, GRASS, GRASS,
+        GRASS, GRASS, DIRT, GRASS, GRASS,
+        GRASS, GRASS, DIRT, GRASS, GRASS
+    };
+
+    TileMap map;
+    if (!map.load("res/img/map-death-mountain.png", sf::Vector2u(32, 32), level, 5, 5));
 
     // background
     sf::Image bgImage;
@@ -61,13 +84,13 @@ int main()
         float timeAsSeconds = elapsedTime.asSeconds();
 
         handleInput(window, player);
+
         player.update(deltaTime);
+
         updateFrame(window);
 
-        // TODO make it so it doesn't need params (unlike this)
+        window.draw(map);
         drawFrame(window, player, bgRect);
-
-        window.display();
     }
 
     return 0;
@@ -118,15 +141,14 @@ void handleInput(sf::RenderWindow& window, Entity& player)
 
 void updateFrame(sf::RenderWindow& window)
 {
-
+    window.clear(sf::Color::Black);
 }
 
 void drawFrame(sf::RenderWindow& window, Entity& player, sf::RectangleShape& bgRect)
 {
-    window.clear(sf::Color::Black);
 
-    window.draw(bgRect);
-    //window.draw(player); // implement via inheritence of "drawable"
+    // window.draw(bgRect);
     window.draw(player);
 
+    window.display();
 }
