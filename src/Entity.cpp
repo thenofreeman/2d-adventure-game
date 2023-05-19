@@ -11,10 +11,10 @@ Entity::Entity(sf::RenderWindow& window)
       movementSpeed{sf::Vector2f(20, 20)},
       currentMovementSpeed{movementSpeed}
 {
-    // shape.setPosition(pos);
-    // shape.setOrigin(shape.getSize() * 0.5f);
 
     sf::Vector2i spriteSize(32, 32);
+    sprite.setOrigin(sf::Vector2f(spriteSize) * 0.5f);
+
     sprite.setTextureRect(sf::IntRect(0, 0, spriteSize.x, spriteSize.y));
 
     auto& walkUpAnimation = animator.createAnimation("player-walk-up", "res/img/player-walk-up.png",
@@ -94,8 +94,17 @@ void Entity::moveRight()
     moving[0] = true;
 }
 
-void Entity::stopMoving()
+void Entity::stopMovingVertical()
+{
+    moving[1] = false;
+}
+
+void Entity::stopMovingHorizontal()
 {
     moving[0] = false;
-    moving[1] = false;
+}
+
+sf::Vector2f Entity::getPosition() const
+{
+    return pos;
 }

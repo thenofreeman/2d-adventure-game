@@ -24,7 +24,10 @@ class Entity
         void moveDown();
         void moveLeft();
         void moveRight();
-        void stopMoving();
+        void stopMovingVertical();
+        void stopMovingHorizontal();
+
+        sf::Vector2f getPosition() const;
 
     private:
         sf::RenderWindow& window;

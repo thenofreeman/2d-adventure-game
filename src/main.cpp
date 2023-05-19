@@ -38,6 +38,12 @@ int main()
     bgRect.setTextureRect(sf::IntRect(0, 0, 32*10, 32*6));
     bgRect.setTexture(&bgTexture);
 
+    auto windowSize = window.getSize();
+    sf::View view(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+
+    view.setCenter(player.getPosition());
+    window.setView(view);
+
     int numFrames = 10;
     float animationDuration = 1.0f;
 
@@ -90,7 +96,12 @@ void handleInput(sf::RenderWindow& window, Entity& player)
     {
         player.moveDown();
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+    else
+    {
+        player.stopMovingVertical();
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
     {
         player.moveLeft();
     }
@@ -100,7 +111,7 @@ void handleInput(sf::RenderWindow& window, Entity& player)
     }
     else
     {
-        player.stopMoving();
+        player.stopMovingHorizontal();
     }
 
 }
