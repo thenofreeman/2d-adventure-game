@@ -42,9 +42,9 @@ void Entity::destruct()
 
 }
 
-void Entity::draw()
+void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    window.draw(sprite);
+    target.draw(sprite, states);
 }
 
 void Entity::update(const sf::Time& deltaTime)

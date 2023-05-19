@@ -127,6 +127,6 @@ void drawFrame(sf::RenderWindow& window, Entity& player, sf::RectangleShape& bgR
 
     window.draw(bgRect);
     //window.draw(player); // implement via inheritence of "drawable"
-    player.draw();
+    window.draw(player);
 
 }

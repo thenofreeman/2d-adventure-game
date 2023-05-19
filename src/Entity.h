@@ -4,7 +4,7 @@
 
 #include "Animator.h"
 
-class Entity
+class Entity : public sf::Drawable
 {
     public:
         Entity() = delete;
@@ -12,7 +12,7 @@ class Entity
 
         void init();
         void destruct();
-        void draw();
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void update(const sf::Time& deltaTime);
 
         void changeAnimation(const std::string& animationName);
