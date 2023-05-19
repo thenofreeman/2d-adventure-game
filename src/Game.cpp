@@ -28,9 +28,6 @@ void Game::run()
     sf::Time elapsedTime = clock.restart();
     sf::Time deltaTime;
 
-    int numFrames = 10;
-    float animationDuration = 1.0f;
-
     while(window.isOpen())
     {
         deltaTime = clock.restart();
