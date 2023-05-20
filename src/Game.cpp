@@ -1,18 +1,19 @@
 #include "Game.h"
 
+#include "Player.h"
+
 Game::Game(const std::string& title)
     : title{title},
       windowStyle{sf::Style::Titlebar | sf::Style::Close},
       window{sf::VideoMode(900, 600), title, windowStyle},
-      player{Entity(window)},
+      player{new Player()},
       currentWorld{World()},
       windowSize{window.getSize()},
       view{sf::FloatRect(0, 0, windowSize.x, windowSize.y)}
 {
     window.setMouseCursorVisible(false);
-    // window.setFramerateLimit(100);
 
-    view.setCenter(player.getPosition());
+    view.setCenter(player->getPosition());
     window.setView(view);
 }
 
@@ -81,34 +82,34 @@ void Game::processEvents()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
     {
-        player.moveUp();
+        player->moveUp();
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
     {
-        player.moveDown();
+        player->moveDown();
     }
     else
     {
-        player.stopMovingVertical();
+        player->stopMovingVertical();
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
     {
-        player.moveLeft();
+        player->moveLeft();
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
     {
-        player.moveRight();
+        player->moveRight();
     }
     else
     {
-        player.stopMovingHorizontal();
+        player->stopMovingHorizontal();
     }
 }
 
 void Game::update(const sf::Time& deltaTime)
 {
-    player.update(deltaTime);
+    player->update(deltaTime);
 }
 
 void Game::render()
@@ -117,7 +118,7 @@ void Game::render()
 
     // draw logic
     window.draw(currentWorld);
-    window.draw(player);
+    window.draw(*player);
 
     window.display();
 }

@@ -7,13 +7,21 @@
 class Entity : public sf::Drawable
 {
     public:
-        Entity() = delete;
-        Entity(sf::RenderWindow& window);
+        Entity();
+        virtual ~Entity();
 
         void init();
         void destruct();
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
         void update(const sf::Time& deltaTime);
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+        void setVelocity(const sf::Vector2f& velocity);
+        sf::Vector2f getVelocity() const;
+        void setMaxVelocity(const sf::Vector2f& velocity);
+        sf::Vector2f getMaxVelocity() const;
+        void setPosition(const sf::Vector2f& pos);
+        sf::Vector2f getPosition() const;
 
         void changeAnimation(const std::string& animationName);
 
@@ -27,16 +35,15 @@ class Entity : public sf::Drawable
         void stopMovingVertical();
         void stopMovingHorizontal();
 
-        sf::Vector2f getPosition() const;
-
-    private:
-        sf::RenderWindow& window;
+    protected:
         sf::Vector2f pos;
         sf::Sprite sprite;
         Animator animator;
 
-        bool moving [2];
-        sf::Vector2f currentMovementSpeed;
-        sf::Vector2f movementSpeed;
+        // sf::Vector2<bool> isMoving;
+        struct { bool x, y; } isMoving;
+
+        sf::Vector2f currentVelocity;
+        sf::Vector2f maxVelocity;
 
 };

@@ -3,37 +3,17 @@
 #include "Sprites.h"
 #include "Textures.h"
 
-Entity::Entity(sf::RenderWindow& window)
-    : window{window},
-      pos{sf::Vector2f(50, 50)},
+Entity::Entity()
+    : pos{sf::Vector2f(50, 50)},
       sprite{sf::Sprite()},
       animator{sprite},
-      moving{false, false},
-      movementSpeed{sf::Vector2f(50, 50)},
-      currentMovementSpeed{movementSpeed}
-{
-    sf::Vector2i spriteSize(32, 32);
-    sprite.setOrigin(sf::Vector2f(spriteSize) * 0.5f);
+      isMoving{false, false},
+      maxVelocity{sf::Vector2f(50, 50)},
+      currentVelocity{maxVelocity}
+{ }
 
-    sprite.setTextureRect(sf::IntRect(0, 0, spriteSize.x, spriteSize.y));
-
-    auto& walkUpAnimation = animator.createAnimation(Textures::PLAYER_WALK_UP,
-                                                     IMG_PATH + Textures::PLAYER_WALK_UP + IMG_EXT,
-                                                     sf::seconds(1), true);
-    walkUpAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkDownAnimation = animator.createAnimation(Textures::PLAYER_WALK_DOWN,
-                                                       IMG_PATH + Textures::PLAYER_WALK_DOWN + IMG_EXT,
-                                                       sf::seconds(1), true);
-    walkDownAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkLeftAnimation = animator.createAnimation(Textures::PLAYER_WALK_SIDE,
-                                                       IMG_PATH + Textures::PLAYER_WALK_SIDE + IMG_EXT,
-                                                       sf::seconds(1), true);
-    walkLeftAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-    auto& walkRightAnimation = animator.createAnimation(Textures::PLAYER_WALK_SIDE,
-                                                        IMG_PATH + Textures::PLAYER_WALK_SIDE + IMG_EXT,
-                                                        sf::seconds(1), true);
-    walkRightAnimation.addFrames(sf::Vector2i(0, 0), spriteSize, 10);
-}
+Entity::~Entity()
+{ }
 
 void Entity::init()
 {
@@ -45,22 +25,52 @@ void Entity::destruct()
 
 }
 
+void Entity::update(const sf::Time& deltaTime)
+{
+    if (isMoving.x || isMoving.y)
+        animator.update(deltaTime);
+
+    if (isMoving.x)
+        pos.x += currentVelocity.x * deltaTime.asSeconds();
+    if (isMoving.y)
+        pos.y += currentVelocity.y * deltaTime.asSeconds();
+
+    sprite.setPosition(pos);
+}
+
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(sprite, states);
 }
 
-void Entity::update(const sf::Time& deltaTime)
+void Entity::setVelocity(const sf::Vector2f& velocity)
 {
-    if (moving[0] || moving[1])
-        animator.update(deltaTime);
+    currentVelocity = velocity;
+}
 
-    if (moving[0])
-        pos.x += currentMovementSpeed.x * deltaTime.asSeconds();
-    if (moving[1])
-        pos.y += currentMovementSpeed.y * deltaTime.asSeconds();
+sf::Vector2f Entity::getVelocity() const
+{
+    return currentVelocity;
+}
 
-    sprite.setPosition(pos);
+void Entity::setMaxVelocity(const sf::Vector2f& velocity)
+{
+    maxVelocity = velocity;
+}
+
+sf::Vector2f Entity::getMaxVelocity() const
+{
+    return maxVelocity;
+}
+
+void Entity::setPosition(const sf::Vector2f& pos)
+{
+    this->pos = pos;
+}
+
+sf::Vector2f Entity::getPosition() const
+{
+    return pos;
 }
 
 void Entity::changeAnimation(const std::string& animationName)
@@ -73,43 +83,38 @@ void Entity::moveUp()
 {
     changeAnimation(Textures::PLAYER_WALK_UP);
 
-    currentMovementSpeed.y = -movementSpeed.y;
+    currentVelocity.y = -maxVelocity.y;
 
-    moving[1] = true;
+    isMoving.y = true;
 }
 
 void Entity::moveDown()
 {
     changeAnimation(Textures::PLAYER_WALK_DOWN);
-    currentMovementSpeed.y = movementSpeed.y;
-    moving[1] = true;
+    currentVelocity.y = maxVelocity.y;
+    isMoving.y = true;
 }
 
 void Entity::moveLeft()
 {
     changeAnimation(Textures::PLAYER_WALK_SIDE);
-    currentMovementSpeed.x = -movementSpeed.x;
-    moving[0] = true;
+    currentVelocity.x = -maxVelocity.x;
+    isMoving.x = true;
 }
 
 void Entity::moveRight()
 {
     changeAnimation(Textures::PLAYER_WALK_SIDE);
-    currentMovementSpeed.x = movementSpeed.x;
-    moving[0] = true;
+    currentVelocity.x = maxVelocity.x;
+    isMoving.x = true;
 }
 
 void Entity::stopMovingVertical()
 {
-    moving[1] = false;
+    isMoving.y = false;
 }
 
 void Entity::stopMovingHorizontal()
 {
-    moving[0] = false;
-}
-
-sf::Vector2f Entity::getPosition() const
-{
-    return pos;
+    isMoving.x = false;
 }

@@ -22,8 +22,8 @@ class Game
         sf::Vector2f windowSize;
         // Entity& controlledEntity;
 
-        // shouldn't be here
-        Entity player;
+        // shouldn't be here like this
+        Entity* player;
         World currentWorld;
         sf::View view;
         // end
