@@ -1,4 +1,4 @@
-#include <SFML/Graphics>
+#include <SFML/Graphics.hpp>
 
 #include <vector>
 
@@ -9,7 +9,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
 
         SceneNode();
 
-        void update(const sf::Time& dt);
+        void update(const sf::Time& deltaTime);
 
         void attachChild(NodePtr child);
         NodePtr detatchChild(const SceneNode& node);
@@ -21,10 +21,10 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         std::vector<NodePtr> children;
         SceneNode* parent;
 
-        virtual void updateCurrent(const sf::Time& dt);
-        void updateChildren(const sf::Time& dt);
+        virtual void updateCurrent(const sf::Time& deltaTime);
+        void updateChildren(const sf::Time& deltaTime);
 
-        virtual void draw(sf::RenderTraget& target, sf::RenderStates states) const;
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };

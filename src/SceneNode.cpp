@@ -1,5 +1,10 @@
 #include "SceneNode.h"
 
+#include <cassert>
+
+SceneNode::SceneNode()
+{ }
+
 void SceneNode::attachChild(NodePtr child)
 {
     child->parent = this;
@@ -17,29 +22,30 @@ SceneNode::NodePtr SceneNode::detatchChild(const SceneNode& node)
     NodePtr result = std::move(*found);
     result->parent = nullptr;
     children.erase(found);
+
     return result;
 }
 
-void SceneNode::update(const sf::Time& dt)
+void SceneNode::update(const sf::Time& deltaTime)
 {
-    updateCurrent(dt);
-    updateChildren(dt);
+    updateCurrent(deltaTime);
+    updateChildren(deltaTime);
 }
 
-void SceneNode::updateCurrent(const sf::Time& dt)
+void SceneNode::updateCurrent(const sf::Time& deltaTime)
 {
 
 }
 
-void SceneNode::updateChildren(const sf::Time& dt)
+void SceneNode::updateChildren(const sf::Time& deltaTime)
 {
     for (NodePtr& child : children)
     {
-        child->update(dt);
+        child->update(deltaTime);
     }
 }
 
-void SceneNode::draw(sf::RenderTraget& target, sf::RenderStates states) const
+void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
@@ -47,8 +53,13 @@ void SceneNode::draw(sf::RenderTraget& target, sf::RenderStates states) const
 
     for (const NodePtr& child : children)
     {
-        child->draw(target, states)
+        child->draw(target, states);
     }
+}
+
+void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+{
+
 }
 
 sf::Transform SceneNode::getWorldTransform() const

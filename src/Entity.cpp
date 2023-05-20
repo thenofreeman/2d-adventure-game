@@ -4,8 +4,7 @@
 #include "Textures.h"
 
 Entity::Entity()
-    : pos{sf::Vector2f(50, 50)},
-      sprite{sf::Sprite()},
+    : sprite{sf::Sprite()},
       animator{sprite},
       isMoving{false, false},
       maxVelocity{sf::Vector2f(50, 50)},
@@ -18,29 +17,17 @@ Entity::Entity()
 Entity::~Entity()
 { }
 
-void Entity::init()
-{
-
-}
-
-void Entity::destruct()
-{
-
-}
-
 void Entity::updateCurrent(const sf::Time& deltaTime)
 {
     if (isMoving.x || isMoving.y)
         animator.update(deltaTime);
 
     if (isMoving.x)
-        pos.x += currentVelocity.x * deltaTime.asSeconds();
+        currentVelocity.x * deltaTime.asSeconds();
     if (isMoving.y)
-        pos.y += currentVelocity.y * deltaTime.asSeconds();
+        currentVelocity.y * deltaTime.asSeconds();
 
     move(currentVelocity * dt.asSeconds());
-
-    // sprite.setPosition(pos);
 }
 
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -66,16 +53,6 @@ void Entity::setMaxVelocity(const sf::Vector2f& velocity)
 sf::Vector2f Entity::getMaxVelocity() const
 {
     return maxVelocity;
-}
-
-void Entity::setPosition(const sf::Vector2f& pos)
-{
-    this->pos = pos;
-}
-
-sf::Vector2f Entity::getPosition() const
-{
-    return pos;
 }
 
 void Entity::changeAnimation(const std::string& animationName)
