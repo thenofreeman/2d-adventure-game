@@ -2,9 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Controlled.h"
 #include "Entity.h"
 
-class Player : public Entity
+class Player : public Controlled, public Entity
 {
     public:
         Player();

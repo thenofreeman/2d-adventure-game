@@ -21,9 +21,6 @@ class Entity : public SceneNode
 
         void changeAnimation(const std::string& animationName);
 
-        void action(); // eg. attack
-        void interact(); // eg. talk, open chest
-
         void moveUp();
         void moveDown();
         void moveLeft();
