@@ -4,21 +4,12 @@
 
 World::World()
 {
-    enum Tile
+    for (int& tile : level)
     {
-        GRASS=0, DIRT,
+        tile = 33;
+    }
 
-    };
-
-    const int level[] {
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS,
-        GRASS, GRASS, DIRT, GRASS, GRASS
-    };
-
-    if (!map.load(IMG_PATH + Textures::WORLD_TILE_MAP + IMG_EXT, sf::Vector2u(32, 32), level, 5, 5));
+    if (!map.load(IMG_PATH + Textures::WORLD_TILE_MAP + IMG_EXT, sf::Vector2u(16, 16), level, 100, 100));
 }
 
 World::~World()

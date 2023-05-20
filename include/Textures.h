@@ -13,6 +13,6 @@ namespace Textures
         PLAYER_WALK_SIDE = "player-walk-side";
 
     const std::string
-        WORLD_TILE_MAP = "map-death-mountain";
+        WORLD_TILE_MAP = "scenery";
 
 }
