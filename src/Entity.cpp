@@ -6,7 +6,6 @@
 Entity::Entity()
     : sprite{sf::Sprite()},
       animator{sprite},
-      isMoving{false, false},
       maxVelocity{sf::Vector2f(50, 50)},
       currentVelocity{maxVelocity}
 {
@@ -19,15 +18,10 @@ Entity::~Entity()
 
 void Entity::updateCurrent(const sf::Time& deltaTime)
 {
-    if (isMoving.x || isMoving.y)
+    if (currentVelocity != sf::Vector2f(0, 0))
         animator.update(deltaTime);
 
-    if (isMoving.x)
-        currentVelocity.x * deltaTime.asSeconds();
-    if (isMoving.y)
-        currentVelocity.y * deltaTime.asSeconds();
-
-    move(currentVelocity * dt.asSeconds());
+    move(currentVelocity * deltaTime.asSeconds());
 }
 
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -66,37 +60,32 @@ void Entity::moveUp()
     changeAnimation(Textures::PLAYER_WALK_UP);
 
     currentVelocity.y = -maxVelocity.y;
-
-    isMoving.y = true;
 }
 
 void Entity::moveDown()
 {
     changeAnimation(Textures::PLAYER_WALK_DOWN);
     currentVelocity.y = maxVelocity.y;
-    isMoving.y = true;
 }
 
 void Entity::moveLeft()
 {
     changeAnimation(Textures::PLAYER_WALK_SIDE);
     currentVelocity.x = -maxVelocity.x;
-    isMoving.x = true;
 }
 
 void Entity::moveRight()
 {
     changeAnimation(Textures::PLAYER_WALK_SIDE);
     currentVelocity.x = maxVelocity.x;
-    isMoving.x = true;
 }
 
 void Entity::stopMovingVertical()
 {
-    isMoving.y = false;
+    currentVelocity.y = 0;
 }
 
 void Entity::stopMovingHorizontal()
 {
-    isMoving.x = false;
+    currentVelocity.x = 0;
 }

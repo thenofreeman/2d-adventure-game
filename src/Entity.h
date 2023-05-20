@@ -35,8 +35,6 @@ class Entity : public SceneNode
         sf::Sprite sprite;
         Animator animator;
 
-        struct { bool x, y; } isMoving;
-
         sf::Vector2f currentVelocity;
         sf::Vector2f maxVelocity;
 
