@@ -3,8 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "Animator.h"
+#include "SceneNode.h"
 
-class Entity : public sf::Drawable
+class Entity : public SceneNode
 {
     public:
         Entity();
@@ -13,8 +14,8 @@ class Entity : public sf::Drawable
         void init();
         void destruct();
 
-        void update(const sf::Time& deltaTime);
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void updateCurrent(const sf::Time& deltaTime);
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void setVelocity(const sf::Vector2f& velocity);
         sf::Vector2f getVelocity() const;

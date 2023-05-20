@@ -10,7 +10,10 @@ Entity::Entity()
       isMoving{false, false},
       maxVelocity{sf::Vector2f(50, 50)},
       currentVelocity{maxVelocity}
-{ }
+{
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+}
 
 Entity::~Entity()
 { }
@@ -25,7 +28,7 @@ void Entity::destruct()
 
 }
 
-void Entity::update(const sf::Time& deltaTime)
+void Entity::updateCurrent(const sf::Time& deltaTime)
 {
     if (isMoving.x || isMoving.y)
         animator.update(deltaTime);
@@ -35,10 +38,12 @@ void Entity::update(const sf::Time& deltaTime)
     if (isMoving.y)
         pos.y += currentVelocity.y * deltaTime.asSeconds();
 
-    sprite.setPosition(pos);
+    move(currentVelocity * dt.asSeconds());
+
+    // sprite.setPosition(pos);
 }
 
-void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(sprite, states);
 }
