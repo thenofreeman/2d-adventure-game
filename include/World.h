@@ -5,15 +5,45 @@
 #include <SFML/Graphics.hpp>
 
 #include "TileMap.h"
+#include "Entity.h"
 
-class World : public sf::Drawable
+class World : public sf::NonCopyable //, public sf::Drawable
 {
     public:
-        World();
+        explicit World(sf::RenderWindow& window);
         virtual ~World();
 
+        void update(const sf::Time& deltaTime);
+        void draw();
+
+
+        // should be private!!
+        Entity* player;
+        // should be private!!
+
     private:
-        TileMap map;
+        enum Layer
+        {
+            Background=0,
+            Foreground,
+            Hud,
+
+            LayerCount,
+        };
+
+        sf::RenderWindow& window;
+        sf::View view;
+
+        SceneNode sceneGraph;
+        std::array<SceneNode*, LayerCount> sceneLayers;
+
+        sf::FloatRect bounds;
+        //Entity* player;
+
+        void loadTextures();
+        void buildScene();
+
+        TileMap* map;
         int level[10000];
 
         enum Tiles
@@ -29,6 +59,6 @@ class World : public sf::Drawable
             GROUND_SPOT_A=40, GROUND_SPOT_B=41,
         };
 
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        // virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };

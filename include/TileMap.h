@@ -2,7 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-class TileMap : public sf::Drawable, public sf::Transformable
+#include "SceneNode.h"
+
+class TileMap : public SceneNode
 {
     public:
         bool load(const std::string& tileSet,
@@ -12,7 +14,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
                   const unsigned int& height);
 
     private:
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         sf::VertexArray vertices;
         sf::Texture tileSet;

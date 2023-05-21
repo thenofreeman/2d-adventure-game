@@ -6,15 +6,10 @@ Game::Game(const std::string& title)
     : title{title},
       windowStyle{sf::Style::Titlebar | sf::Style::Close},
       window{sf::VideoMode(900, 600), title, windowStyle},
-      player{new Player()},
-      currentWorld{World()},
-      windowSize{window.getSize()},
-      view{sf::FloatRect(0, 0, windowSize.x, windowSize.y)}
+      currentWorld{new World(window)},
+      windowSize{window.getSize()}
 {
     window.setMouseCursorVisible(false);
-
-    view.setCenter(player->getPosition());
-    window.setView(view);
 }
 
 Game::~Game()
@@ -82,43 +77,43 @@ void Game::processEvents()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
     {
-        player->moveUp();
+        currentWorld->player->moveUp();
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
     {
-        player->moveDown();
+        currentWorld->player->moveDown();
     }
     else
     {
-        player->stopMovingVertical();
+        currentWorld->player->stopMovingVertical();
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
     {
-        player->moveLeft();
+        currentWorld->player->moveLeft();
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
     {
-        player->moveRight();
+        currentWorld->player->moveRight();
     }
     else
     {
-        player->stopMovingHorizontal();
+        currentWorld->player->stopMovingHorizontal();
     }
 }
 
 void Game::update(const sf::Time& deltaTime)
 {
-    player->update(deltaTime);
+    currentWorld->update(deltaTime);
+    currentWorld->player->update(deltaTime);
 }
 
 void Game::render()
 {
     window.clear(sf::Color::Black);
+    currentWorld->draw();
 
-    // draw logic
-    window.draw(currentWorld);
-    window.draw(*player);
+    window.setView(window.getDefaultView());
 
     window.display();
 }

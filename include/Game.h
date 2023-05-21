@@ -4,7 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Entity.h"
 #include "World.h"
 
 class Game
@@ -20,13 +19,8 @@ class Game
         sf::Uint32 windowStyle;
         sf::RenderWindow window;
         sf::Vector2f windowSize;
-        // Entity& controlledEntity;
 
-        // shouldn't be here like this
-        Entity* player;
-        World currentWorld;
-        sf::View view;
-        // end
+        World* currentWorld;
 
         void init();
         void shutdown();
