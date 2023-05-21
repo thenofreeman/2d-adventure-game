@@ -3,6 +3,8 @@
 #include "Textures.h"
 #include "Player.h"
 
+#include "Map.h"
+
 World::World(sf::RenderWindow& window)
     : window{window},
       view{window.getDefaultView()},
@@ -17,12 +19,7 @@ World::World(sf::RenderWindow& window)
 
 void World::loadTextures()
 {
-    for (int& tile : level)
-    {
-        tile = 33;
-    }
-
-    if (!map->load(IMG_PATH + Textures::WORLD_TILE_MAP + IMG_EXT, sf::Vector2u(16, 16), level, 100, 100));
+    if (!map->load(IMG_PATH + Textures::WORLD_TILE_MAP + IMG_EXT, sf::Vector2u(16, 16), mapData, 20, 20));
 }
 
 void World::buildScene()
