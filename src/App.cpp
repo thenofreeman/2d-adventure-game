@@ -6,7 +6,8 @@ App::App(std::string title)
     : title{title},
       windowSize{900, 600},
       window{sf::VideoMode(windowSize.x, windowSize.y), title},
-      statusCode{0}
+      statusCode{0},
+      game{window}
 {
     registerStates();
 }
@@ -22,7 +23,7 @@ void App::run()
 {
     sf::Clock clock;
 
-    timePerFrame = sf::seconds(1.0f / 60.0f);
+    sf::Time timePerFrame = sf::seconds(1.0f / 60.0f);
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
     while (window.isOpen())
@@ -38,7 +39,7 @@ void App::run()
             timeSinceLastUpdate -= timePerFrame;
 
             processEvents();
-            update();
+            update(timePerFrame);
         }
 
         draw();
@@ -71,19 +72,14 @@ void App::processEvents()
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-    {
+    game.handleInput();
 
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-    {
-
-    }
 }
 
-void App::update()
+void App::update(const sf::Time& timePerFrame)
 {
     // stateManager.update(timePerFrame);
+    game.update(timePerFrame);
 }
 
 void App::draw()
@@ -91,6 +87,7 @@ void App::draw()
     window.clear();
 
     // stateManager.draw();
+    game.draw();
 
     window.setView(window.getDefaultView());
 

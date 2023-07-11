@@ -1,8 +1,10 @@
 #pragma once
 
+#include <string>
+
 #include <SFML/Graphics.hpp>
 
-#include <string>
+#include "GameState.h"
 
 class App
 {
@@ -19,7 +21,7 @@ class App
 
     private:
         void  processEvents();
-        void         update();
+        void         update(const sf::Time& timePerFrame);
         void           draw();
 
         void registerStates();
@@ -29,10 +31,9 @@ class App
         sf::Vector2i     windowSize;
         sf::RenderWindow     window;
 
-        sf::Time timePerFrame;
-
         int statusCode;
 
+        GameState game;
         // StateManager stateManager;
         //
 
