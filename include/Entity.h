@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Direction.h"
+#include "Textures.h"
+#include "Animator.h"
 
 class Entity : public sf::Drawable
 {
@@ -16,7 +18,8 @@ class Entity : public sf::Drawable
         Direction movementDirection;
 
     private:
-        sf::RectangleShape shape;
+        sf::Sprite sprite;
+        Animator animator;
 
         sf::Vector2f currentVelocity;
 
@@ -26,6 +29,7 @@ class Entity : public sf::Drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void move(const sf::Time& timePerFrame);
+        void changeAnimation(const std::string& animationName);
 
 
 };

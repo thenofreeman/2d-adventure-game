@@ -2,21 +2,17 @@
 
 #include "App.h"
 
+#include "AssetManager.h"
+
 int main(int argc, char *argv[])
 {
+    AssetManager ams;
+
     App app("Adventure Game");
 
-    try
-    {
-        app.startup();
-        app.run();
-        app.shutdown();
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "EXCEPTION LOST TO MAIN: " << e.what() << std::endl;
-    }
-
+    app.startup();
+    app.run();
+    app.shutdown();
 
     return app.quit();
 }
