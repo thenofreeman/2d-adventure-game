@@ -12,6 +12,7 @@ Entity::Entity()
     sprite.setPosition(sf::Vector2f{100.f, 100.f});
     sprite.setOrigin(sf::Vector2f(entitySize) * 0.5f);
     sprite.setTextureRect(sf::IntRect(0, 0, entitySize.x, entitySize.y));
+    sprite.setScale(1.35, 1.35);
 
 
     auto& walkUpAnimation = animator.createAnimation(Textures::PLAYER_WALK_UP, sf::seconds(1), true);
